@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promptwars</title>
+    <meta name="description" content="A battle of the AI Prompts game.">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="bg-shape shape-1" aria-hidden="true"></div>
+    <div class="bg-shape shape-2" aria-hidden="true"></div>
+    <div class="bg-shape shape-3" aria-hidden="true"></div>
+
+    <div class="container">
+        <header class="hero">
+            <p class="eyebrow">Prompt Wars Hackathon</p>
+            <h1>Promptwars</h1>
+            <p class="subtitle">Battle of the AI Prompts</p>
+        </header>
+
+        <main>
+            <section class="battle-arena">
+                <div class="player-card" id="player-1-card">
+                    <h2>Player 1</h2>
+                    <textarea id="prompt-1" placeholder="Enter your prompt here..." aria-label="Player 1 prompt"></textarea>
+                    <small class="hint">Tip: Be specific about role, constraints, and output format.</small>
+                </div>
+                <div class="vs-badge">VS</div>
+                <div class="player-card" id="player-2-card">
+                    <h2>Player 2</h2>
+                    <textarea id="prompt-2" placeholder="Enter your prompt here..." aria-label="Player 2 prompt"></textarea>
+                    <small class="hint">Tip: Add examples to make your prompt stronger.</small>
+                </div>
+            </section>
+
+            <div class="actions">
+                <button class="battle-btn" id="start-battle-btn">Start Battle</button>
+                <button class="ghost-btn" id="reset-btn" type="button">Reset</button>
+            </div>
+
+            <section class="results" id="results" aria-live="polite">
+                <h3>Round Result</h3>
+                <p id="result-text">Enter both prompts and click Start Battle.</p>
+                <div class="scoreboard">
+                    <span id="score-p1">Player 1: 0</span>
+                    <span id="score-p2">Player 2: 0</span>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
