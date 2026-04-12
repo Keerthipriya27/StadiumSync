@@ -31,6 +31,33 @@ body {
     overflow-x: hidden;
 }
 
+.skip-link {
+    position: absolute;
+    left: -999px;
+    top: 0;
+    background: #ffffff;
+    color: #000000;
+    padding: 0.65rem 1rem;
+    z-index: 1000;
+    border-radius: 0.25rem;
+}
+
+.skip-link:focus {
+    left: 1rem;
+    top: 1rem;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
 .bg-shape {
     position: fixed;
     border-radius: 50%;
