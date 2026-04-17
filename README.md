@@ -75,17 +75,18 @@ http://127.0.0.1:5000
 pytest -q
 ```
 
-## Live Preview Deployment (Render)
+## Live Preview Deployment (Google Cloud Run)
 
-This repository includes `render.yaml` and `Procfile` for one-click deployment.
+This repository is optimized for deployment on Google Cloud Platform. 
+Since we redeemed Google Cloud credits for the hackathon, we are hosting on a premium, auto-scaling enterprise container system!
 
-1. Push latest code to GitHub.
-2. Log in to Render and click **New +** -> **Blueprint**.
-3. Select this GitHub repository.
-4. Render reads `render.yaml` and deploys automatically.
-5. After deployment, save your live link (example: `https://promptwars.onrender.com`).
+1. Install Google Cloud SDK (`gcloud`).
+2. Authenticate: `gcloud auth login`
+3. Set your project: `gcloud config set project <your-project-id>`
+4. Deploy: `gcloud run deploy promptwars --source . --region=us-central1 --allow-unauthenticated`
+5. After deployment, save your live Google Cloud Run link (example: `https://promptwars-...-uc.a.run.app`).
 
-Use this live link in hackathon submission where live preview is required.
+Use this live link in your hackathon submission!
 
 ## AI Score Improvement Mapping
 
