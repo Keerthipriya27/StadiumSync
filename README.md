@@ -1,132 +1,40 @@
-# Promptwars - Prompt Wars Hackathon Submission
+# StadiumSync
 
-Promptwars is a Flask web app where two players compete by writing AI prompts. The app compares prompt quality using simple heuristic scoring and declares a round winner.
+StadiumSync is a real-time, responsive dashboard designed strictly for attendees at large-scale sporting venues. Built to address the pervasive hackathon track challenges of crowd movement, waiting times, and real-time coordination, this platform empowers users with actionable, live insights.
 
 ## Features
 
-- Two-player prompt battle interface
-- Prompt quality scoring (length, role clarity, constraints, structure)
-- Round winner highlight
-- Running scoreboard
-- Reset option for a fresh match
-- Responsive UI for desktop and mobile
-- Health check endpoint for deployment verification (`/health`)
-- Security hardening headers for safer web delivery
-- Basic automated tests with `pytest`
+- **Live Crowd Heatmap:** Real-time zoning data allows users to identify highly congested areas and navigate safer, less-crowded paths.
+- **Queue Trackers:** Constantly updating estimated wait times for critical venue locations like restrooms and food/beverage stands.
+- **Meetup Coordinator:** A quick interface to pinpoint and broadcast specific meeting gates/zones to friends in the crowd.
+- **Live Alerts Schedule:** Event timeline with active warnings, safety broadcasts, and match tracking.
+- **Premium UI:** Aesthetic dark mode UI built with CSS Grid, featuring micro-animations, neon status indicators, and glassmorphism.
 
 ## Tech Stack
 
-- Python 3
-- Flask
-- HTML, CSS, JavaScript
+- **Backend:** Python + Flask (Fast API simulation)
+- **Frontend:** Vanilla JS, HTML, Custom CSS
+- **Deployment:** Render / Built-in capability
 
-## Project Structure
+## Running the Application Locally
 
-```text
-Promptwars/
-  app.py
-  requirements.txt
-  .gitignore
-  README.md
-  static/
-    style.css
-    script.js
-  templates/
-    index.html
-```
+1. Create a virtual environment and load dependencies:
+   ```bash
+   python -m venv .venv
+   source .venv/Scripts/activate  # On Windows
+   pip install -r requirements.txt
+   ```
 
-## Local Setup
+2. Start the Flask application:
+   ```bash
+   python app.py
+   ```
 
-1. Clone the repository:
+3. Navigate to `http://localhost:5000` to view the dashboard live.
 
-```bash
-git clone <your-public-repo-url>
-cd Promptwars
-```
+## Hackathon Goal Addressed
 
-2. Create and activate a virtual environment (recommended):
+This project directly addresses the Prompt Wars Hackathon / Event track prompt:
+*"Design a solution that improves the physical event experience for attendees at large-scale sporting venues. The system should address challenges such as crowd movement, waiting times, and real-time coordination, while ensuring a seamless and enjoyable experience."*
 
-```bash
-python -m venv .venv
-.venv\\Scripts\\activate
-```
-
-3. Install dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
-4. Run the app:
-
-```bash
-python app.py
-```
-
-5. Open in browser:
-
-```text
-http://127.0.0.1:5000
-```
-
-## Run Tests
-
-```bash
-pytest -q
-```
-
-## Live Preview Deployment (Google Cloud Run)
-
-This repository is optimized for deployment on Google Cloud Platform. 
-Since we redeemed Google Cloud credits for the hackathon, we are hosting on a premium, auto-scaling enterprise container system!
-
-1. Install Google Cloud SDK (`gcloud`).
-2. Authenticate: `gcloud auth login`
-3. Set your project: `gcloud config set project <your-project-id>`
-4. Deploy: `gcloud run deploy promptwars --source . --region=us-central1 --allow-unauthenticated`
-5. After deployment, save your live Google Cloud Run link (example: `https://promptwars-...-uc.a.run.app`).
-
-Use this live link in your hackathon submission!
-
-## AI Score Improvement Mapping
-
-- Instructions: clear README setup and deployment steps
-- Code Quality: modular Flask app (`create_app`) and clean frontend logic
-- Security: CSP and response security headers in backend
-- Efficiency: lightweight scoring logic, no heavy runtime dependencies
-- Testing: route + health + security-header test coverage
-- Accessibility: skip link, semantic labels, live region for result updates
-- Google Services: Google Fonts integrated in UI
-
-## Prompt Wars Submission Checklist
-
-- Repository is **public**
-- Repository has **only one branch**
-- Repository size is **less than 10 MB**
-- Code is pushed to GitHub and link is copied for portal submission
-- Live preview link is ready and working
-- LinkedIn post link is ready and public
-
-## LinkedIn Post Template (Narrative Submission)
-
-Copy, personalize, and post this on LinkedIn:
-
-```text
-Built "Promptwars" for the Prompt Wars Hackathon 🚀
-
-What I built:
-- A Flask-based web app where two players battle with AI prompts
-- Prompt scoring using role clarity, constraints, structure, and specificity
-- Responsive UI with round-based winner and scoreboard
-- Added testing, accessibility improvements, and deployment-ready setup
-
-Tech stack: Python, Flask, HTML, CSS, JavaScript
-Live demo: <your-live-link>
-GitHub: <your-github-repo-link>
-
-#PromptWars #Hackathon #AI #Flask #WebDevelopment #BuildInPublic
-```
-
-## Notes
-
-This project is a demo prototype intended for hackathon submission and can be extended with backend AI model evaluation later.
+By rendering a centralized, live updating application, attendees can minimize stress, reduce wait times, and drastically improve their physical experience.

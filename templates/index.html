@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Promptwars</title>
-    <meta name="description" content="A battle of the AI Prompts game.">
+    <title>StadiumSync - Live Venue Dashboard</title>
+    <meta name="description" content="Real-time physical event experience and coordination dashboard.">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Bebas+Neue&display=swap" rel="stylesheet">
 </head>
@@ -16,40 +16,87 @@
 
     <div class="container">
         <header class="hero">
-            <p class="eyebrow">Prompt Wars Hackathon</p>
-            <h1>Promptwars</h1>
-            <p class="subtitle">Battle of the AI Prompts</p>
+            <p class="eyebrow">Your Event Companion</p>
+            <h1>StadiumSync</h1>
+            <p class="subtitle">Real-time crowd movement and event coordination</p>
         </header>
 
-        <main id="main-content">
-            <section class="battle-arena">
-                <div class="player-card" id="player-1-card">
-                    <h2 id="player-1-title">Player 1</h2>
-                    <label class="sr-only" for="prompt-1">Player 1 prompt</label>
-                    <textarea id="prompt-1" placeholder="Enter your prompt here..." aria-labelledby="player-1-title"></textarea>
-                    <small class="hint">Tip: Be specific about role, constraints, and output format.</small>
-                </div>
-                <div class="vs-badge">VS</div>
-                <div class="player-card" id="player-2-card">
-                    <h2 id="player-2-title">Player 2</h2>
-                    <label class="sr-only" for="prompt-2">Player 2 prompt</label>
-                    <textarea id="prompt-2" placeholder="Enter your prompt here..." aria-labelledby="player-2-title"></textarea>
-                    <small class="hint">Tip: Add examples to make your prompt stronger.</small>
+        <main id="main-content" class="dashboard-grid">
+            <!-- Crowd Heatmap -->
+            <section class="card heatmap-card" aria-labelledby="heatmap-title">
+                <h2 id="heatmap-title">Live Crowd Heatmap</h2>
+                <div class="zones">
+                    <div class="zone" id="zone-A">
+                        <span class="zone-name">Zone A (North)</span>
+                        <span class="zone-status status-low">Low</span>
+                    </div>
+                    <div class="zone" id="zone-B">
+                        <span class="zone-name">Zone B (South)</span>
+                        <span class="zone-status status-medium">Med</span>
+                    </div>
+                    <div class="zone" id="zone-C">
+                        <span class="zone-name">Zone C (Pitch)</span>
+                        <span class="zone-status status-high">High</span>
+                    </div>
                 </div>
             </section>
 
-            <div class="actions">
-                <button class="battle-btn" id="start-battle-btn">Start Battle</button>
-                <button class="ghost-btn" id="reset-btn" type="button">Reset</button>
-            </div>
-
-            <section class="results" id="results" aria-live="polite" role="status">
-                <h3>Round Result</h3>
-                <p id="result-text">Enter both prompts and click Start Battle.</p>
-                <div class="scoreboard">
-                    <span id="score-p1">Player 1: 0</span>
-                    <span id="score-p2">Player 2: 0</span>
+            <!-- Wait Times -->
+            <section class="card queue-card" aria-labelledby="queue-title">
+                <h2 id="queue-title">Live Wait Times</h2>
+                <div class="queue-list">
+                    <div class="queue-item">
+                        <span class="queue-name">Restrooms (North)</span>
+                        <span class="queue-time" id="q-rest-n">5 min</span>
+                    </div>
+                    <div class="queue-item">
+                        <span class="queue-name">Restrooms (South)</span>
+                        <span class="queue-time" id="q-rest-s">12 min</span>
+                    </div>
+                    <div class="queue-item">
+                        <span class="queue-name">Pizza Stand</span>
+                        <span class="queue-time" id="q-pizza">20 min</span>
+                    </div>
+                    <div class="queue-item">
+                        <span class="queue-name">Drinks Kiosk</span>
+                        <span class="queue-time" id="q-drinks">3 min</span>
+                    </div>
                 </div>
+            </section>
+
+            <!-- Meetup Coordination -->
+            <section class="card meetup-card" aria-labelledby="meetup-title">
+                <h2 id="meetup-title">Coordinate Meetup</h2>
+                <p class="hint">Set a pin for your friends to find you easily.</p>
+                <div class="meetup-actions">
+                    <select id="meetup-location" aria-label="Select Meetup Location">
+                        <option value="Gate 1">Gate 1 - North Entrance</option>
+                        <option value="Gate 2">Gate 2 - South Entrance</option>
+                        <option value="Food Court">Main Food Court</option>
+                        <option value="Merch Stand A">Merchandise Stand A</option>
+                    </select>
+                    <button id="broadcast-btn" class="action-btn">Broadcast to Friends</button>
+                </div>
+                <div id="meetup-status" class="status-msg" aria-live="polite"></div>
+            </section>
+
+            <!-- Event Schedule -->
+            <section class="card schedule-card" aria-labelledby="schedule-title">
+                <h2 id="schedule-title">Alerts & Schedule</h2>
+                <ul class="timeline">
+                    <li class="timeline-item active">
+                        <span class="time">Now</span>
+                        <span class="event">Match in Progress - 1st Half</span>
+                    </li>
+                    <li class="timeline-item">
+                        <span class="time">In 15m</span>
+                        <span class="event">Half-Time Show starts</span>
+                    </li>
+                    <li class="timeline-item warning">
+                        <span class="time">Alert</span>
+                        <span class="event">Avoid South Entrance due to heavy traffic</span>
+                    </li>
+                </ul>
             </section>
         </main>
     </div>

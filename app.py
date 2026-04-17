@@ -1,7 +1,6 @@
 import os
-
+import random
 from flask import Flask, jsonify, render_template
-
 
 def create_app() -> Flask:
     app = Flask(__name__)
@@ -30,11 +29,27 @@ def create_app() -> Flask:
     def health():
         return jsonify({'status': 'ok'})
 
+    @app.get('/api/venue-status')
+    def venue_status():
+        # Mocking live data for the dashboard
+        return jsonify({
+            'crowd': {
+                'zoneA': random.choice(['Low', 'Medium', 'High']),
+                'zoneB': random.choice(['Low', 'Medium', 'High']),
+                'zoneC': random.choice(['Low', 'Medium', 'High'])
+            },
+            'queues': {
+                'restrooms_north': random.randint(1, 15),
+                'restrooms_south': random.randint(1, 15),
+                'food_pizza': random.randint(5, 25),
+                'food_drinks': random.randint(2, 10)
+            }
+        })
+
     return app
 
 
 app = create_app()
-
 
 if __name__ == '__main__':
     debug_mode = os.getenv('FLASK_DEBUG', '0') == '1'

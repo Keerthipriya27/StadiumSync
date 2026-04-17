@@ -1,83 +1,74 @@
-const startButton = document.getElementById('start-battle-btn');
-const resetButton = document.getElementById('reset-btn');
-const promptOne = document.getElementById('prompt-1');
-const promptTwo = document.getElementById('prompt-2');
-const resultText = document.getElementById('result-text');
-const scoreP1 = document.getElementById('score-p1');
-const scoreP2 = document.getElementById('score-p2');
-const playerOneCard = document.getElementById('player-1-card');
-const playerTwoCard = document.getElementById('player-2-card');
+// Client-side logic for StadiumSync
 
-let score1 = 0;
-let score2 = 0;
-
-function promptScore(text) {
-    const cleaned = text.trim();
-    if (!cleaned) {
-        return 0;
+// Simulated fetching of live data from the backend
+async function fetchVenueStatus() {
+    try {
+        const response = await fetch('/api/venue-status');
+        if (!response.ok) throw new Error('Network response was not ok');
+        const data = await response.json();
+        updateDashboard(data);
+    } catch (error) {
+        console.error("Failed to fetch venue status:", error);
     }
-
-    const words = cleaned.split(/\s+/).length;
-    const hasConstraint = /(must|should|only|exactly|avoid|format)/i.test(cleaned);
-    const hasRole = /(act as|you are|role|expert)/i.test(cleaned);
-    const hasStructure = /(:|-|\n|1\.|2\.)/.test(cleaned);
-
-    let score = Math.min(words, 120);
-    if (hasConstraint) score += 15;
-    if (hasRole) score += 15;
-    if (hasStructure) score += 10;
-
-    return score;
 }
 
-function setCardState(winnerCard, loserCard) {
-    playerOneCard.classList.remove('winner', 'loser');
-    playerTwoCard.classList.remove('winner', 'loser');
+function updateDashboard(data) {
+    // Update Crowd Heatmap
+    const zones = {
+        'A': 'zoneA',
+        'B': 'zoneB',
+        'C': 'zoneC'
+    };
 
-    if (winnerCard) winnerCard.classList.add('winner');
-    if (loserCard) loserCard.classList.add('loser');
+    for (let id in zones) {
+        const statusElement = document.querySelector(`#zone-${id} .zone-status`);
+        const value = data.crowd[zones[id]];
+        
+        statusElement.textContent = value;
+        
+        // Reset classes
+        statusElement.classList.remove('status-low', 'status-medium', 'status-high');
+        statusElement.parentElement.style.borderLeftColor = value === 'Low' ? 'var(--success)' : (value === 'Medium' ? 'var(--warning)' : 'var(--danger)');
+
+        if (value === 'Low') statusElement.classList.add('status-low');
+        else if (value === 'Medium') statusElement.classList.add('status-medium');
+        else statusElement.classList.add('status-high');
+    }
+
+    // Update Queues
+    document.getElementById('q-rest-n').textContent = `${data.queues.restrooms_north} min`;
+    document.getElementById('q-rest-s').textContent = `${data.queues.restrooms_south} min`;
+    document.getElementById('q-pizza').textContent = `${data.queues.food_pizza} min`;
+    document.getElementById('q-drinks').textContent = `${data.queues.food_drinks} min`;
 }
 
-startButton.addEventListener('click', () => {
-    const text1 = promptOne.value;
-    const text2 = promptTwo.value;
+// Meetup Broadcast Logic
+const broadcastBtn = document.getElementById('broadcast-btn');
+const statusMsg = document.getElementById('meetup-status');
+const locationSelect = document.getElementById('meetup-location');
 
-    if (!text1.trim() || !text2.trim()) {
-        resultText.textContent = 'Please enter both prompts to start the battle.';
-        setCardState(null, null);
-        return;
-    }
-
-    const p1 = promptScore(text1);
-    const p2 = promptScore(text2);
-
-    if (p1 === p2) {
-        resultText.textContent = `Draw! Both prompts are strong (${p1} vs ${p2}). Refine wording for a clear winner.`;
-        setCardState(null, null);
-        return;
-    }
-
-    if (p1 > p2) {
-        score1 += 1;
-        resultText.textContent = `Player 1 wins this round! Score: ${p1} vs ${p2}`;
-        setCardState(playerOneCard, playerTwoCard);
-    } else {
-        score2 += 1;
-        resultText.textContent = `Player 2 wins this round! Score: ${p2} vs ${p1}`;
-        setCardState(playerTwoCard, playerOneCard);
-    }
-
-    scoreP1.textContent = `Player 1: ${score1}`;
-    scoreP2.textContent = `Player 2: ${score2}`;
+broadcastBtn.addEventListener('click', () => {
+    const loc = locationSelect.value;
+    broadcastBtn.disabled = true;
+    broadcastBtn.textContent = 'Broadcasting...';
+    
+    // Simulate network delay
+    setTimeout(() => {
+        statusMsg.textContent = `✅ Pin shared with friends: ${loc}!`;
+        statusMsg.style.display = 'block';
+        broadcastBtn.textContent = 'Broadcast Updated';
+        broadcastBtn.disabled = false;
+        
+        // Hide message after 5 seconds
+        setTimeout(() => {
+            statusMsg.style.display = 'none';
+            broadcastBtn.textContent = 'Broadcast to Friends';
+        }, 5000);
+    }, 1200);
 });
 
-resetButton.addEventListener('click', () => {
-    promptOne.value = '';
-    promptTwo.value = '';
-    score1 = 0;
-    score2 = 0;
-    scoreP1.textContent = 'Player 1: 0';
-    scoreP2.textContent = 'Player 2: 0';
-    resultText.textContent = 'Enter both prompts and click Start Battle.';
-    setCardState(null, null);
-});
+// Poll for data every 5 seconds
+setInterval(fetchVenueStatus, 5000);
+
+// Initial fetch
+fetchVenueStatus();

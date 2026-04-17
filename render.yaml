@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: promptwars
+    name: stadiumsync
     env: python
     plan: free
     buildCommand: pip install -r requirements.txt
